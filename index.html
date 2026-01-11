@@ -159,10 +159,8 @@
                     <i class="ph ph-gear text-xl text-slate-400 group-hover:text-amber-400 transition-colors"></i> 
                     <span class="font-medium text-sm">Pengaturan</span>
                 </button>
-                 <button onclick="window.resetData()" class="w-full text-left px-4 py-3 rounded-lg hover:bg-red-500/10 hover:text-red-400 flex items-center gap-3 transition-all group mt-6" id="nav-reset">
-                    <i class="ph ph-trash text-xl text-slate-400 group-hover:text-red-400 transition-colors"></i> 
-                    <span class="font-medium text-sm">Reset Data Demo</span>
-                </button>
+                
+                <!-- Tombol Reset Data Demo dihapus -->
 
                 <!-- BACKUP & RESTORE SECTION -->
                 <div class="pt-6 pb-2 px-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest">Manajemen Data</div>
@@ -1044,15 +1042,44 @@
             const filtered = employees.filter(e => e.nama.toLowerCase().includes(search) || e.nip.includes(search));
             document.getElementById('pegawai-count').innerText = `Menampilkan ${filtered.length} pegawai`;
             tbody.innerHTML = filtered.map(e => `
-                <tr class="hover:bg-slate-50 border-b border-slate-100 group">
-                    <td class="p-4 pl-6 font-bold text-sm text-slate-700">${e.nama}<br><span class="font-normal text-xs text-slate-500">${e.nip}</span></td>
-                    <td class="p-4 text-sm">${e.jabatan}<br><span class="text-xs bg-slate-100 px-1 rounded">${e.golongan}</span></td>
-                    <td class="p-4 text-xs">KP: ${new Date(e.tmt_pangkat).toLocaleDateString()}<br>KGB: ${new Date(e.tmt_berkala).toLocaleDateString()}</td>
-                    <td class="p-4 text-center text-xs font-bold">${e.mk_tahun} Thn ${e.mk_bulan} Bln</td>
-                    <td class="p-4 text-right font-mono text-sm font-bold text-slate-700">${fmtMoney(calcGaji(e.golongan, e.mk_tahun))}</td>
-                    <td class="p-4 text-center"><button onclick="window.openAddEmployeeModal(${e.id})" class="text-blue-600 hover:bg-blue-50 p-1 rounded"><i class="ph ph-pencil-simple"></i></button></td>
+                <tr class="hover:bg-slate-50 border-b border-slate-100 group transition-colors">
+                    <td class="p-4 pl-6 font-bold text-sm text-slate-700">
+                        ${e.nama}
+                        <br><span class="font-normal text-xs text-slate-500 font-mono">${e.nip}</span>
+                    </td>
+                    <td class="p-4 text-sm text-slate-600">
+                        ${e.jabatan}
+                        <div class="mt-1"><span class="text-[10px] font-bold bg-slate-100 text-slate-500 px-2 py-0.5 rounded border border-slate-200">${e.golongan}</span></div>
+                    </td>
+                    <td class="p-4 text-xs text-slate-500">
+                        <div class="flex items-center gap-1 mb-1" title="TMT Pangkat Terakhir"><i class="ph ph-medal text-amber-500"></i> ${new Date(e.tmt_pangkat).toLocaleDateString('id-ID')}</div>
+                        <div class="flex items-center gap-1" title="TMT Berkala Terakhir"><i class="ph ph-money text-emerald-500"></i> ${new Date(e.tmt_berkala).toLocaleDateString('id-ID')}</div>
+                    </td>
+                    <td class="p-4 text-center text-xs font-bold text-slate-700 bg-slate-50/50 rounded-lg mx-2">${e.mk_tahun} Thn ${e.mk_bulan} Bln</td>
+                    <td class="p-4 text-right font-mono text-sm font-bold text-emerald-700">${fmtMoney(calcGaji(e.golongan, e.mk_tahun))}</td>
+                    <td class="p-4 text-center">
+                        <div class="flex items-center justify-center gap-1">
+                            <button onclick="window.openAddEmployeeModal(${e.id})" class="text-blue-600 hover:bg-blue-50 hover:text-blue-700 p-2 rounded-lg transition-all" title="Edit Data">
+                                <i class="ph ph-pencil-simple text-lg"></i>
+                            </button>
+                            <button onclick="window.deleteEmployee(${e.id})" class="text-red-500 hover:bg-red-50 hover:text-red-700 p-2 rounded-lg transition-all" title="Hapus Data">
+                                <i class="ph ph-trash text-lg"></i>
+                            </button>
+                        </div>
+                    </td>
                 </tr>`).join('');
         }
+
+        window.deleteEmployee = function(id) {
+            const emp = employees.find(e => e.id === id);
+            if(confirm(`Apakah Anda yakin ingin menghapus data pegawai ${emp ? emp.nama : ''}? Tindakan ini tidak dapat dibatalkan.`)) { 
+                employees = employees.filter(e => e.id !== id); 
+                saveData(); 
+                renderPegawai(); 
+                updateDashboard(); 
+                showToast("Data pegawai berhasil dihapus", "warning"); 
+            }
+        };
 
         function renderUsulan(type) {
             const tbody = document.getElementById('table-usulan-body');
@@ -1242,10 +1269,6 @@
             saveData(); closeAddEmployeeModal(); renderPegawai(); updateDashboard(); showToast("Disimpan");
         };
 
-        window.deleteEmployee = function(id) {
-            if(confirm("Hapus?")) { employees = employees.filter(e => e.id !== id); saveData(); renderPegawai(); updateDashboard(); showToast("Dihapus"); }
-        };
-
         window.previewGajiForm = function() {
             const g = document.getElementById('input-golongan').value;
             const m = parseInt(document.getElementById('input-mk-tahun').value)||0;
@@ -1307,13 +1330,7 @@
         };
 
         // --- RESTORED FUNCTIONS ---
-        // NEW: resetData function (MISSING IN PREVIOUS VERSION)
-        window.resetData = function() {
-            if(confirm("Reset semua data ke kondisi awal demo? Data yang Anda input akan hilang.")) {
-                localStorage.clear();
-                location.reload();
-            }
-        };
+        // window.resetData removed
 
         window.resetLogo = function() {
             appSettings.logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Coat_of_arms_of_South_Kalimantan.svg/242px-Coat_of_arms_of_South_Kalimantan.svg.png";
