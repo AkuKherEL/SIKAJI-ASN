@@ -1,0 +1,115 @@
+SIKAJI ASN - Sistem Kepegawaian & Kinerja
+
+Aplikasi berbasis web (Single Page Application) untuk manajemen dan simulasi kepegawaian ASN, disesuaikan dengan regulasi PP 5/2024 dan PerBKN 4/2025. Aplikasi ini dirancang khusus untuk kebutuhan Laboratorium Bahan Konstruksi Dinas PUPR Provinsi Kalimantan Selatan.
+
+🌟 Fitur Utama
+
+1. Manajemen Kepegawaian
+
+Database Lokal: Menyimpan data pegawai menggunakan localStorage browser.
+
+CRUD Pegawai: Tambah, Edit, Hapus, dan Lihat data pegawai.
+
+Pencarian Cepat: Filter pegawai berdasarkan Nama atau NIP secara real-time.
+
+2. Otomasi & Simulasi (Regulasi 2025)
+
+Hitung Gaji Otomatis: Menggunakan interpolasi gaji pokok berdasarkan Masa Kerja Golongan (MKG) sesuai tabel PP 5/2024.
+
+Deteksi Kenaikan Pangkat (KP): Menghitung eligibilitas KP reguler 4 tahunan dengan logika pengurangan MKG lintas golongan.
+
+Deteksi Kenaikan Gaji Berkala (KGB): Menggunakan pola tahun Ganjil/Genap sesuai golongan.
+
+Simulasi Karir 10 Tahun: Memproyeksikan kenaikan pangkat dan gaji seorang pegawai hingga 10 tahun ke depan.
+
+3. Pelaporan & Validasi
+
+Cetak Laporan: Mendukung cetak Daftar Nominatif, Antrian Verifikasi, dan Realisasi SK.
+
+Kop Surat Digital: Kustomisasi logo dan kop surat instansi.
+
+Tanda Tangan Elektronik (QR): Laporan dilengkapi QR Code yang berisi hash validasi data pejabat penandatangan.
+
+4. Keamanan & Utilitas
+
+Sistem Login: Otentikasi admin sederhana (Session Storage).
+
+Backup & Restore: Fitur ekspor/impor seluruh database ke file JSON untuk keamanan data.
+
+Notifikasi Sistem: Toast notification untuk setiap aksi.
+
+🚀 Cara Instalasi & Penggunaan
+
+Aplikasi ini tidak memerlukan instalasi server (Apache/Nginx/Node.js). Cukup gunakan browser modern.
+
+Menjalankan di Lokal (Komputer)
+
+Download file sikaji_asn_login.html dari repositori ini.
+
+Buka file tersebut dengan Google Chrome, Microsoft Edge, atau Mozilla Firefox.
+
+Login dengan akun default.
+
+Hosting di Vercel (Disarankan)
+
+Cara termudah dan tercepat untuk online:
+
+Pastikan nama file utama Anda adalah index.html.
+
+Push kode ke repositori GitHub Anda.
+
+Buka Vercel, login dengan GitHub.
+
+Klik "Add New..." > "Project".
+
+Import repositori GitHub Anda.
+
+Klik Deploy. Website akan aktif dalam hitungan detik dengan HTTPS otomatis.
+
+Hosting di GitHub Pages (Alternatif)
+
+Fork atau upload kode ini ke repositori GitHub Anda.
+
+Ubah nama file sikaji_asn_login.html menjadi index.html.
+
+Masuk ke menu Settings > Pages di repository GitHub.
+
+Pada bagian Branch, pilih main atau master, lalu klik Save.
+
+Aplikasi akan aktif dalam beberapa menit di alamat: https://username-anda.github.io/nama-repo/.
+
+🔐 Akun Default
+
+Saat pertama kali dijalankan, gunakan kredensial berikut:
+
+Username: admin
+
+Password: admin123
+
+Penting: Segera ubah password Anda melalui menu Pengaturan > Keamanan Akun setelah berhasil login.
+
+🛠️ Teknologi
+
+Aplikasi ini dibangun dengan teknologi web standar tanpa dependensi build tools yang rumit:
+
+HTML5 & CSS3
+
+JavaScript (ES6+) - Vanilla JS
+
+Tailwind CSS (via CDN) - Untuk styling antarmuka.
+
+Chart.js (via CDN) - Untuk visualisasi grafik statistik.
+
+Phosphor Icons (via CDN) - Untuk ikonografi.
+
+⚠️ Catatan Penting
+
+Karena aplikasi ini berjalan di sisi klien (client-side):
+
+Data tersimpan di Cache Browser komputer pengguna.
+
+Jika Anda menghapus cache/history browser, data akan hilang.
+
+Gunakan fitur Backup Data (JSON) secara berkala melalui menu sidebar untuk mengamankan data Anda.
+
+© 2025 Laboratorium Bahan Konstruksi Dinas PUPR Prov. Kalsel
