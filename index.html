@@ -818,8 +818,8 @@
             
             if (validUser) {
                 currentUser = validUser;
-                // Simpan sesi di localStorage (sederhana)
-                localStorage.setItem('sikaji_session', JSON.stringify(validUser));
+                // Simpan sesi di sessionStorage (sederhana)
+                sessionStorage.setItem('sikaji_session', JSON.stringify(validUser));
                 
                 // Update UI
                 document.getElementById('login-interface').classList.add('hidden');
@@ -836,14 +836,14 @@
 
         window.performLogout = function() {
             if(confirm("Apakah Anda yakin ingin keluar?")) {
-                localStorage.removeItem('sikaji_session');
+                sessionStorage.removeItem('sikaji_session');
                 currentUser = null;
                 location.reload(); // Refresh untuk kembali ke login
             }
         };
 
         function checkSession() {
-            const session = localStorage.getItem('sikaji_session');
+            const session = sessionStorage.getItem('sikaji_session');
             if (session) {
                 currentUser = JSON.parse(session);
                 document.getElementById('login-interface').classList.add('hidden');
@@ -874,7 +874,7 @@
                 saveData(); // Save to storage
                 
                 // Update Session
-                localStorage.setItem('sikaji_session', JSON.stringify(currentUser));
+                sessionStorage.setItem('sikaji_session', JSON.stringify(currentUser));
                 
                 alert("Password berhasil diubah!");
                 document.getElementById('set-pass-old').value = '';
