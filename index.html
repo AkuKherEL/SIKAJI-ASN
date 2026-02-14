@@ -122,7 +122,19 @@ CREATE TABLE IF NOT EXISTS settings ( id TEXT PRIMARY KEY, signername TEXT, sign
 -- 2. Data Awal Admin (Username: admin, Pass: admin123)
 INSERT INTO users (username, password, name, role) VALUES ('admin', 'admin123', 'Administrator', 'admin') ON CONFLICT (username) DO NOTHING;
 
--- 3. Buka Akses RLS (Untuk Prototype)
+-- 3. Fungsi Login Aman (RPC)
+-- Logika autentikasi berjalan di server database
+CREATE OR REPLACE FUNCTION login_user(usr TEXT, pwd TEXT)
+RETURNS json AS $$
+DECLARE
+    found_user json;
+BEGIN
+    SELECT row_to_json(t) INTO found_user FROM users t WHERE username = usr AND password = pwd LIMIT 1;
+    RETURN found_user;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+-- 4. Buka Akses RLS (Untuk Prototype)
 ALTER TABLE users DISABLE ROW LEVEL SECURITY; 
 ALTER TABLE employees DISABLE ROW LEVEL SECURITY; 
 ALTER TABLE proposals DISABLE ROW LEVEL SECURITY; 
@@ -560,7 +572,7 @@ ALTER TABLE settings DISABLE ROW LEVEL SECURITY;
             if(!supabase) return window.showModal("Error", "Koneksi database belum diatur.");
 
             try {
-                const { data, error } = await supabase.from('users').select('*').eq('username', u).eq('password', p).single();
+                const { data, error } = await supabase.rpc('login_user', { usr: u, pwd: p });
                 
                 if (error || !data) {
                     window.showToast("Username atau Password salah!", "error");
@@ -659,18 +671,18 @@ ALTER TABLE settings DISABLE ROW LEVEL SECURITY;
             if (isNaN(targetMK)) targetMK = 0;
             
             // LOGIC UPDATE: Menghapus pembatasan manual Minimal/Maksimal.
-            // Menggunakan murni lookup data yang tersedia.
+            // Menggunakan murni lookup data yang tersedia (Floor Lookup).
 
-            // Iterate backwards to find the highest year <= targetMK (Floor Lookup)
-            // Jika targetMK > max year tabel, loop akan langsung ketemu di index terakhir (max gaji).
-            // Jika targetMK < min year tabel, loop selesai tanpa hasil -> return 0.
+            // Cari tahun tertinggi di tabel yang <= targetMK.
+            // - Jika targetMK > max year tabel, loop akan langsung match di index terakhir (max gaji).
+            // - Jika targetMK < min year tabel, loop selesai tanpa match -> return 0.
             for (let i = data.years.length - 1; i >= 0; i--) {
                 if (data.years[i] <= targetMK) {
                     return data.salaries[i];
                 }
             }
             
-            return 0; // Jika MK di bawah tahun minimum tabel (misal MK 0 untuk Gol I/b)
+            return 0; // Jika MK di bawah tahun minimum tabel
         }
 
         function getEffectiveSalary(e) {
@@ -1241,7 +1253,7 @@ ALTER TABLE settings DISABLE ROW LEVEL SECURITY;
                             id: 'salary_std',
                             regulation: REGULATION_NAME,
                             effectivedate: "2024-01-01",
-                            ranges: GAJI_POKOK_2024,
+                            ranges: SALARY_REFERENCES,
                             updatedat: Date.now()
                         };
                         
