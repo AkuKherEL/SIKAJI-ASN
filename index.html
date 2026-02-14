@@ -333,7 +333,7 @@ ALTER TABLE settings DISABLE ROW LEVEL SECURITY;
         import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 
         // --- CONSTANTS & CONFIGURATION ---
-        const REGULATION_NAME = "Perpres No. 10 Tahun 2024"; // Centralized Regulation Label
+        const REGULATION_NAME = "Perpres No. 10 Tahun 2024";
 
         // --- FULL SALARY REFERENCE TABLE (PERPRES 10/2024 - LAMPIRAN) ---
         const GAJI_POKOK_ARRAYS = {
@@ -341,7 +341,7 @@ ALTER TABLE settings DISABLE ROW LEVEL SECURITY;
             'I/b': [1840800, 1898800, 1958600, 2020300, 2083900, 2149600, 2217300, 2287100, 2359100, 2433400, 2510100, 2589100, 2670700],
             'I/c': [1918700, 1979100, 2041400, 2105700, 2172000, 2240500, 2311000, 2383800, 2458900, 2536300, 2616200, 2698600, 2783700],
             'I/d': [1999900, 2062900, 2127900, 2194900, 2264000, 2335300, 2408900, 2484800, 2563000, 2643800, 2727000, 2812900, 2901400],
-            'II/a': [2184000, 2252800, 2323700, 2396900, 2472400, 2550300, 2630600, 2713400, 2798900, 2887100, 2978000, 3071800, 3168500, 3268300, 3371200, 3477400, 3586900, 3643400], // 18 Items
+            'II/a': [2184000, 2252800, 2323700, 2396900, 2472400, 2550300, 2630600, 2713400, 2798900, 2887100, 2978000, 3071800, 3168500, 3268300, 3371200, 3477400, 3586900, 3643400], 
             'II/b': [2385000, 2460100, 2537600, 2617500, 2700000, 2785000, 2872700, 2963200, 3056500, 3152800, 3252100, 3354500, 3460200, 3569100, 3681600, 3797500],
             'II/c': [2485900, 2564200, 2645000, 2728300, 2814200, 2902800, 2994300, 3088600, 3185800, 3286200, 3389700, 3496400, 3606600, 3720200, 3837300, 3958200],
             'II/d': [2591100, 2672700, 2756900, 2843700, 2933300, 3025700, 3121000, 3219300, 3320700, 3425300, 3533200, 3644500, 3759300, 3877700, 3999800, 4125600],
@@ -363,32 +363,41 @@ ALTER TABLE settings DISABLE ROW LEVEL SECURITY;
             'IV/a': { start: 0, max: 32 }, 'IV/b': { start: 0, max: 32 }, 'IV/c': { start: 0, max: 32 }, 'IV/d': { start: 0, max: 32 }, 'IV/e': { start: 0, max: 32 }
         };
 
-        // FIXED: II/a in Perpres 10/2024 has steps: 0, 1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33 (18 Items)
-        // Ensure this maps 1:1 with GAJI_POKOK_ARRAYS['II/a']
-        const YEAR_MAPS = {
-            'II/a': [0, 1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33]
+        // --- FULL EXPLICIT YEAR MAPPING (ANTI-BUG) ---
+        const FULL_YEAR_MAPS = {
+            'I/a': [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26],
+            'I/b': [3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27],
+            'I/c': [3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27],
+            'I/d': [3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27],
+            'II/a': [0, 1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33],
+            'II/b': [3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33],
+            'II/c': [3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33],
+            'II/d': [3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33],
+            'III/a': [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32],
+            'III/b': [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32],
+            'III/c': [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32],
+            'III/d': [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32],
+            'IV/a': [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32],
+            'IV/b': [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32],
+            'IV/c': [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32],
+            'IV/d': [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32],
+            'IV/e': [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32]
         };
 
         function buildFullSalaryTable() {
             const table = {};
             Object.keys(GAJI_POKOK_ARRAYS).forEach(gol => {
                 const arr = GAJI_POKOK_ARRAYS[gol];
-                const start = SALARY_META[gol].start;
+                const yearMap = FULL_YEAR_MAPS[gol];
                 table[gol] = {};
                 
-                // If special map exists, use explicit years
-                if (YEAR_MAPS[gol]) {
+                // Use explicit mapping strictly
+                if (arr && yearMap) {
                     arr.forEach((val, idx) => {
-                        if (idx < YEAR_MAPS[gol].length) {
-                            const year = YEAR_MAPS[gol][idx];
+                        if (idx < yearMap.length) {
+                            const year = yearMap[idx];
                             table[gol][year] = val;
                         }
-                    });
-                } else {
-                    // Default logic: start + (idx * 2)
-                    arr.forEach((val, idx) => {
-                        let mk = start + (idx * 2);
-                        table[gol][mk] = val;
                     });
                 }
             });
@@ -645,29 +654,31 @@ ALTER TABLE settings DISABLE ROW LEVEL SECURITY;
 
         function calcGaji(g, mk) { 
             const ranges = GAJI_POKOK_2024[g];
-            const meta = SALARY_META[g];
-            if (!ranges || !meta) return 0;
+            // No meta needed with explicit map, but good to have fallback checks
+            if (!ranges) return 0;
             
             let targetMK = parseInt(mk, 10);
             if (isNaN(targetMK)) targetMK = 0;
             
-            // 1. Minimum limit
-            if (targetMK < meta.start) targetMK = meta.start;
-            
-            // 2. Exact Lookup (Handles explicit maps like II/a and standard even steps)
+            // 1. Exact Lookup
             if (ranges[targetMK] !== undefined) {
                 return ranges[targetMK];
             }
 
-            // 3. Round down to nearest valid step if exact not found
-            // Find all valid years, sort them descending
+            // 2. Opsi C: "Round down to nearest valid step if exact not found" (Safety Fallback)
+            // But specifically handle the "month overflow" logic implicitly by finding the correct floor year.
             const validYears = Object.keys(ranges).map(Number).sort((a,b) => b-a);
             
-            // If target is above max, return max
+            // If target is above max, return max salary
             if (targetMK >= validYears[0]) return ranges[validYears[0]];
 
-            // Else find the closest lower bound
+            // Find the closest LOWER bound (Floor)
             const lowerBound = validYears.find(y => y <= targetMK);
+            
+            // Note: If someone has MKG=2 and it's I/a (0, 2...), it matches exactly.
+            // If someone has MKG=1 and it's I/a, lowerBound is 0. Correct.
+            // If someone has MKG=2 and it's II/a (0, 1, 3...), lowerBound is 1. Correct.
+            
             return lowerBound !== undefined ? ranges[lowerBound] : 0;
         }
 
@@ -782,7 +793,7 @@ ALTER TABLE settings DISABLE ROW LEVEL SECURITY;
 
         window.isEligibleKGB = function(e) {
             // 1. Cek Batas MKG Maksimal
-            const meta = SALARY_META[e.golongan];
+            const meta = FULL_YEAR_MAPS[e.golongan] ? { max: Math.max(...FULL_YEAR_MAPS[e.golongan]) } : { max: 32 };
             // Gunakan MK Gaji untuk cek eligibility KGB
             if (meta && e.mk_gaji_tahun >= meta.max) {
                 return { eligible: false, msg: "Masa Kerja Mentok (Maksimal)" };
@@ -1518,6 +1529,30 @@ ALTER TABLE settings DISABLE ROW LEVEL SECURITY;
             // Load data for the first time
             if (supabase) {
                 await window.loadData();
+
+                // --- AKTIVASI REALTIME LISTENER ---
+                // Mendengarkan perubahan data dari database secara langsung
+                console.log("Mengaktifkan Realtime Listener...");
+                supabase.channel('public:db_changes')
+                    .on('postgres_changes', { event: '*', schema: 'public', table: 'employees' }, (payload) => {
+                        console.log('Realtime: Data Pegawai berubah', payload);
+                        window.showToast("Data Pegawai diperbarui secara Real-time", "info");
+                        window.loadData(); // Reload UI otomatis
+                    })
+                    .on('postgres_changes', { event: '*', schema: 'public', table: 'proposals' }, (payload) => {
+                        console.log('Realtime: Data Usulan berubah', payload);
+                        // Hanya reload jika bukan insert dari klien ini (opsional, tapi loadData aman)
+                        window.loadData(); 
+                    })
+                    .on('postgres_changes', { event: '*', schema: 'public', table: 'settings' }, (payload) => {
+                        console.log('Realtime: Pengaturan berubah', payload);
+                        window.loadData();
+                    })
+                    .subscribe((status) => {
+                        if (status === 'SUBSCRIBED') {
+                            console.log('SIKAJI ASN terhubung ke Realtime Updates');
+                        }
+                    });
             }
             
             // Interval waktu & tanggal
