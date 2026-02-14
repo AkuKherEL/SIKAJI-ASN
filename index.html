@@ -278,7 +278,7 @@ ALTER TABLE settings DISABLE ROW LEVEL SECURITY;
                 <!-- USULAN VIEW -->
                 <div id="view-usulan" class="hidden space-y-6 animate-fade-in"><div class="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-3xl p-10 text-white shadow-2xl relative overflow-hidden"><div class="relative z-10"><h2 class="text-3xl font-bold mb-2" id="usulan-title">Periodisasi KP</h2><p class="text-blue-100 text-sm max-w-xl">Sistem otomatis mendeteksi pegawai yang memenuhi syarat (Eligible) berdasarkan perhitungan Masa Kerja Golongan dan regulasi BKN.</p><div class="mt-6 inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 px-4 py-2 rounded-xl"><i class="ph ph-check-circle text-gold-400 text-xl"></i><span class="font-bold text-lg" id="usulan-count">0</span> <span class="text-xs opacity-80 uppercase tracking-wide font-bold pt-1">Pegawai Eligible</span></div></div><div class="absolute right-0 top-0 w-64 h-64 bg-white rounded-full blur-[100px] opacity-10"></div></div><div class="glass rounded-3xl overflow-hidden"><div class="p-5 border-b border-slate-100 bg-slate-50/50 flex justify-between items-center"><h4 class="font-bold text-slate-700">Daftar Nominatif</h4><input type="text" id="search-usulan" onkeyup="window.filterUsulanTable()" placeholder="Filter..." class="pl-4 pr-4 py-2 bg-white border border-slate-200 rounded-lg text-xs w-64 focus:ring-2 focus:ring-blue-500/20 outline-none"></div><table class="w-full text-left text-sm"><thead class="bg-slate-50 text-slate-500 font-bold border-b border-slate-200 uppercase text-xs"><tr><th class="p-5 pl-8 w-1/3">Pegawai</th><th class="p-5 w-1/3">Estimasi</th><th class="p-5 text-center">Analisis</th><th class="p-5 text-right pr-8">Aksi</th></tr></thead><tbody id="table-usulan-body" class="divide-y divide-slate-100 bg-white/50"></tbody></table></div></div>
                 <div id="view-verifikasi" class="hidden space-y-6 animate-fade-in"><div class="flex justify-between items-end"><div><h2 class="font-bold text-2xl text-slate-800">Antrian Verifikasi</h2><p class="text-slate-500 text-sm">Validasi usulan kenaikan pangkat & gaji berkala.</p></div><button onclick="window.printGeneralReport('PENDING')" class="bg-white border border-slate-200 text-slate-700 px-5 py-2.5 rounded-xl text-sm font-bold shadow-sm hover:bg-slate-50 flex items-center gap-2"><i class="ph ph-printer"></i> Cetak Daftar</button></div><div class="glass rounded-3xl overflow-hidden shadow-sm"><table class="w-full text-left text-sm"><thead class="bg-slate-50 text-slate-500 font-bold border-b border-slate-200 uppercase text-xs"><tr><th class="p-5 pl-8">Tgl Usulan</th><th class="p-5">Jenis</th><th class="p-5">Pegawai</th><th class="p-5">Detail Perubahan</th><th class="p-5 text-center">Status</th><th class="p-5 text-right pr-8">Kontrol</th></tr></thead><tbody id="table-verifikasi-body" class="divide-y divide-slate-100 bg-white/50"></tbody></table></div></div>
-                <div id="view-simulation" class="hidden space-y-6 animate-fade-in"><div class="grid grid-cols-1 lg:grid-cols-3 gap-8"><div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-200"><h3 class="font-bold text-lg text-slate-800 mb-6 flex items-center gap-2"><i class="ph ph-sliders-horizontal text-gold-500"></i> Parameter Simulasi</h3><div class="space-y-5"><div><label class="block text-xs font-bold text-slate-500 uppercase mb-1">Golongan Saat Ini</label><select id="sim-golongan" class="w-full p-3.5 border border-slate-200 rounded-xl text-sm bg-slate-50 focus:ring-2 focus:ring-gold-500/20 outline-none"></select></div><div class="grid grid-cols-2 gap-4"><div><label class="block text-xs font-bold text-slate-500 uppercase mb-1">MKG Tahun</label><input type="number" id="sim-mk-tahun" class="w-full p-3.5 border border-slate-200 rounded-xl text-sm bg-slate-50 outline-none" value="0"></div><div><label class="block text-xs font-bold text-slate-500 uppercase mb-1">MKG Bulan</label><input type="number" id="sim-mk-bulan" class="w-full p-3.5 border border-slate-200 rounded-xl text-sm bg-slate-50 outline-none" value="0"></div></div><div><label class="block text-xs font-bold text-slate-500 uppercase mb-1">TMT Pangkat Terakhir</label><input type="date" id="sim-tmt-pangkat" class="w-full p-3.5 border border-slate-200 rounded-xl text-sm bg-slate-50 outline-none"></div><div><label class="block text-xs font-bold text-slate-500 uppercase mb-1">TMT Berkala Terakhir</label><input type="date" id="sim-tmt-berkala" class="w-full p-3.5 border border-slate-200 rounded-xl text-sm bg-slate-50 outline-none"></div><button onclick="window.runSimulation()" class="w-full py-3.5 bg-navy-900 hover:bg-navy-800 text-white rounded-xl font-bold shadow-lg transition-colors flex items-center justify-center gap-2 mt-2"><i class="ph ph-magic-wand text-lg"></i> Hitung Proyeksi</button></div></div><div class="lg:col-span-2 space-y-6"><div id="sim-result-header" class="hidden bg-slate-800 text-white p-6 rounded-2xl shadow-lg"><h4 class="text-lg font-bold">Hasil Proyeksi Karir (10 Tahun)</h4><p class="text-slate-300 text-sm">Estimasi kenaikan berdasarkan regulasi PP 5/2024 & PerBKN 4/2025.</p></div><div id="sim-timeline" class="space-y-4 relative"><div class="text-center text-slate-400 py-20 flex flex-col items-center justify-center border-2 border-dashed border-slate-200 rounded-3xl bg-slate-50/50"><i class="ph ph-chart-line-up text-4xl mb-2 text-slate-300"></i><p>Masukkan parameter di sebelah kiri<br>untuk melihat hasil simulasi.</p></div></div></div></div></div>
+                <div id="view-simulation" class="hidden space-y-6 animate-fade-in"><div class="grid grid-cols-1 lg:grid-cols-3 gap-8"><div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-200"><h3 class="font-bold text-lg text-slate-800 mb-6 flex items-center gap-2"><i class="ph ph-sliders-horizontal text-gold-500"></i> Parameter Simulasi</h3><div class="space-y-5"><div><label class="block text-xs font-bold text-slate-500 uppercase mb-1">Golongan Saat Ini</label><select id="sim-golongan" class="w-full p-3.5 border border-slate-200 rounded-xl text-sm bg-slate-50 focus:ring-2 focus:ring-gold-500/20 outline-none"></select></div><div class="grid grid-cols-2 gap-4"><div><label class="block text-xs font-bold text-slate-500 uppercase mb-1">MKG Tahun</label><input type="number" id="sim-mk-tahun" class="w-full p-3.5 border border-slate-200 rounded-xl text-sm bg-slate-50 outline-none" value="0"></div><div><label class="block text-xs font-bold text-slate-500 uppercase mb-1">MKG Bulan</label><input type="number" id="sim-mk-bulan" class="w-full p-3.5 border border-slate-200 rounded-xl text-sm bg-slate-50 outline-none" value="0"></div></div><div><label class="block text-xs font-bold text-slate-500 uppercase mb-1">TMT Pangkat Terakhir</label><input type="date" id="sim-tmt-pangkat" class="w-full p-3.5 border border-slate-200 rounded-xl text-sm bg-slate-50 outline-none"></div><div><label class="block text-xs font-bold text-slate-500 uppercase mb-1">TMT Berkala Terakhir</label><input type="date" id="sim-tmt-berkala" class="w-full p-3.5 border border-slate-200 rounded-xl text-sm bg-slate-50 outline-none"></div><button onclick="window.runSimulation()" class="w-full py-3.5 bg-navy-900 hover:bg-navy-800 text-white rounded-xl font-bold shadow-lg transition-colors flex items-center justify-center gap-2 mt-2"><i class="ph ph-magic-wand text-lg"></i> Hitung Proyeksi</button></div></div><div class="lg:col-span-2 space-y-6"><div id="sim-result-header" class="hidden bg-slate-800 text-white p-6 rounded-2xl shadow-lg"><h4 class="text-lg font-bold">Hasil Proyeksi Karir (10 Tahun)</h4><p class="text-slate-300 text-sm">Estimasi kenaikan berdasarkan regulasi PerBKN 4/2025.</p></div><div id="sim-timeline" class="space-y-4 relative"><div class="text-center text-slate-400 py-20 flex flex-col items-center justify-center border-2 border-dashed border-slate-200 rounded-3xl bg-slate-50/50"><i class="ph ph-chart-line-up text-4xl mb-2 text-slate-300"></i><p>Masukkan parameter di sebelah kiri<br>untuk melihat hasil simulasi.</p></div></div></div></div></div>
                 <div id="view-laporan" class="hidden space-y-6 animate-fade-in"><div class="flex items-center justify-between"><div><h3 class="font-bold text-slate-800 text-xl">Pusat Laporan</h3><p class="text-slate-500 text-sm">Cetak dokumen rekapitulasi kepegawaian dan usulan.</p></div></div><div class="grid grid-cols-1 md:grid-cols-3 gap-6"><div class="glass p-8 rounded-3xl hover:shadow-lg transition-all group cursor-pointer text-center" onclick="window.printGeneralReport('ALL')"><div class="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center text-blue-600 mb-6 mx-auto group-hover:scale-110 transition-transform"><i class="ph ph-users-three text-3xl"></i></div><h4 class="font-bold text-slate-800 text-lg mb-2">Daftar Nominatif</h4><p class="text-sm text-slate-500 mb-6">Rekapitulasi seluruh data pegawai aktif.</p><button class="w-full py-3 bg-slate-900 text-white rounded-xl font-bold text-sm hover:bg-slate-800">Cetak</button></div><div class="glass p-8 rounded-3xl hover:shadow-lg transition-all group cursor-pointer text-center" onclick="window.printGeneralReport('APPROVED')"><div class="w-16 h-16 bg-emerald-50 rounded-2xl flex items-center justify-center text-emerald-600 mb-6 mx-auto group-hover:scale-110 transition-transform"><i class="ph ph-check-fat text-3xl"></i></div><h4 class="font-bold text-slate-800 text-lg mb-2">Laporan SK Terbit</h4><p class="text-sm text-slate-500 mb-6">Daftar usulan yang telah disetujui.</p><button class="w-full py-3 bg-white border border-slate-200 text-slate-700 rounded-xl font-bold text-sm hover:bg-slate-50">Cetak</button></div><div class="glass p-8 rounded-3xl hover:shadow-lg transition-all group cursor-pointer text-center" onclick="window.printGeneralReport('PENDING')"><div class="w-16 h-16 bg-amber-50 rounded-2xl flex items-center justify-center text-amber-600 mb-6 mx-auto group-hover:scale-110 transition-transform"><i class="ph ph-clock-countdown text-3xl"></i></div><h4 class="font-bold text-slate-800 text-lg mb-2">Antrian Verifikasi</h4><p class="text-sm text-slate-500 mb-6">Daftar usulan menunggu persetujuan.</p><button class="w-full py-3 bg-white border border-slate-200 text-slate-700 rounded-xl font-bold text-sm hover:bg-slate-50">Cetak</button></div></div></div>
                 
                 <!-- VIEW SALARY (UPDATED WITH CALCULATOR) -->
@@ -336,75 +336,77 @@ ALTER TABLE settings DISABLE ROW LEVEL SECURITY;
         const REGULATION_NAME = "Perpres No. 10 Tahun 2024";
 
         // --- FULL SALARY REFERENCE TABLE (PERPRES 10/2024 - LAMPIRAN) ---
-        const GAJI_POKOK_ARRAYS = {
-            'I/a': [1685700, 1738800, 1793600, 1850100, 1908400, 1968500, 2030500, 2094500, 2160500, 2228500, 2298700, 2371100, 2445800, 2522600],
-            'I/b': [1840800, 1898800, 1958600, 2020300, 2083900, 2149600, 2217300, 2287100, 2359100, 2433400, 2510100, 2589100, 2670700],
-            'I/c': [1918700, 1979100, 2041400, 2105700, 2172000, 2240500, 2311000, 2383800, 2458900, 2536300, 2616200, 2698600, 2783700],
-            'I/d': [1999900, 2062900, 2127900, 2194900, 2264000, 2335300, 2408900, 2484800, 2563000, 2643800, 2727000, 2812900, 2901400],
-            'II/a': [2184000, 2252800, 2323700, 2396900, 2472400, 2550300, 2630600, 2713400, 2798900, 2887100, 2978000, 3071800, 3168500, 3268300, 3371200, 3477400, 3586900, 3643400], 
-            'II/b': [2385000, 2460100, 2537600, 2617500, 2700000, 2785000, 2872700, 2963200, 3056500, 3152800, 3252100, 3354500, 3460200, 3569100, 3681600, 3797500],
-            'II/c': [2485900, 2564200, 2645000, 2728300, 2814200, 2902800, 2994300, 3088600, 3185800, 3286200, 3389700, 3496400, 3606600, 3720200, 3837300, 3958200],
-            'II/d': [2591100, 2672700, 2756900, 2843700, 2933300, 3025700, 3121000, 3219300, 3320700, 3425300, 3533200, 3644500, 3759300, 3877700, 3999800, 4125600],
-            'III/a': [2785700, 2873500, 2964000, 3057300, 3153600, 3252900, 3355400, 3461100, 3570100, 3682500, 3798500, 3918100, 4041500, 4168800, 4300100, 4435600, 4575200],
-            'III/b': [2903600, 2995000, 3089400, 3186700, 3287000, 3390600, 3497400, 3607500, 3721200, 3838400, 3959200, 4084000, 4212600, 4345300, 4482100, 4623300, 4768800],
-            'III/c': [3026400, 3121700, 3220100, 3321500, 3426100, 3534000, 3645400, 3760200, 3878600, 4000800, 4126800, 4256800, 4390900, 4529200, 4671800, 4819000, 4970500],
-            'III/d': [3154400, 3253800, 3356300, 3462000, 3571100, 3683500, 3799600, 3919300, 4042700, 4170000, 4301400, 4436900, 4576600, 4720800, 4869500, 5022900, 5180700],
-            'IV/a': [3287800, 3391400, 3498200, 3608400, 3722100, 3839300, 3960300, 4085000, 4213700, 4346400, 4483300, 4624500, 4770200, 4920500, 5075500, 5235300, 5399900],
-            'IV/b': [3426900, 3534900, 3646200, 3761100, 3879600, 4001800, 4127900, 4257900, 4392000, 4530400, 4673100, 4820300, 4972100, 5128800, 5290300, 5456900, 5628300],
-            'IV/c': [3571900, 3684400, 3800500, 3920200, 4043700, 4171100, 4302500, 4438000, 4577800, 4722000, 4870800, 5024200, 5182500, 5345700, 5514100, 5687800, 5866400],
-            'IV/d': [3723000, 3840300, 3961300, 4086100, 4214800, 4347500, 4484500, 4625700, 4771500, 4921800, 5076800, 5236700, 5401700, 5571800, 5747400, 5928400, 6114500],
-            'IV/e': [3880400, 4002700, 4128800, 4258800, 4393000, 4531400, 4674100, 4821400, 4973300, 5129900, 5291500, 5458200, 5630100, 5807500, 5990500, 6179100, 6373200] 
+        // DATA FIXED: Values exactly match the PDF attachments.
+        const SALARY_REFERENCES = {
+            'I/a': {
+                years: [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26],
+                salaries: [1685700, 1738800, 1793500, 1850000, 1908300, 1968400, 2030400, 2094300, 2160300, 2228300, 2298500, 2370900, 2445500, 2522600]
+            },
+            'I/b': {
+                years: [3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27],
+                salaries: [1840800, 1898800, 1958600, 2020300, 2083900, 2149600, 2217300, 2287100, 2359100, 2433400, 2510100, 2589100, 2670700]
+            },
+            'I/c': {
+                years: [3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27],
+                salaries: [1918700, 1979100, 2041500, 2105800, 2172100, 2240500, 2311100, 2383900, 2458900, 2536400, 2616300, 2698700, 2783700]
+            },
+            'I/d': {
+                years: [3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27],
+                salaries: [1999900, 2062900, 2127800, 2194800, 2264000, 2335300, 2408800, 2484700, 2562900, 2643700, 2726900, 2812800, 2901400]
+            },
+            'II/a': {
+                years: [0, 1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33],
+                salaries: [2184000, 2218400, 2288200, 2360300, 2434600, 2511300, 2590400, 2672000, 2756200, 2843000, 2932500, 3024900, 3120100, 3218400, 3319800, 3424300, 3532200, 3643400]
+            },
+            'II/b': {
+                years: [3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33],
+                salaries: [2385000, 2460100, 2537600, 2617500, 2700000, 2785000, 2872700, 2963200, 3056500, 3152800, 3252100, 3354500, 3460200, 3569100, 3681600, 3797500]
+            },
+            'II/c': {
+                years: [3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33],
+                salaries: [2485900, 2564200, 2645000, 2728300, 2814200, 2902800, 2994300, 3088600, 3185800, 3286200, 3389700, 3496400, 3606500, 3720100, 3837300, 3958200]
+            },
+            'II/d': {
+                years: [3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33],
+                salaries: [2591100, 2672700, 2756800, 2843700, 2933200, 3025600, 3120900, 3219200, 3320600, 3425200, 3533100, 3644300, 3759100, 3877500, 3999600, 4125600]
+            },
+            'III/a': {
+                years: [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32],
+                salaries: [2785700, 2873500, 2964000, 3057300, 3153600, 3252900, 3355400, 3461100, 3570100, 3682500, 3798500, 3918100, 4041500, 4168800, 4300100, 4435500, 4575200]
+            },
+            'III/b': {
+                years: [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32],
+                salaries: [2903600, 2995000, 3089300, 3186600, 3287000, 3390500, 3497300, 3607500, 3721100, 3838300, 3959200, 4083900, 4212500, 4345100, 4482000, 4623200, 4768800]
+            },
+            'III/c': {
+                years: [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32],
+                salaries: [3026400, 3121700, 3220000, 3321400, 3426000, 3533900, 3645200, 3760100, 3878500, 4000600, 4126600, 4256600, 4390700, 4528900, 4671600, 4818700, 4970500]
+            },
+            'III/d': {
+                years: [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32],
+                salaries: [3154400, 3253700, 3356200, 3461900, 3571000, 3683400, 3799400, 3919100, 4042500, 4169900, 4301200, 4436700, 4576400, 4720500, 4869200, 5022500, 5180700]
+            },
+            'IV/a': {
+                years: [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32],
+                salaries: [3287800, 3391400, 3498200, 3608400, 3722000, 3839200, 3960200, 4084900, 4213500, 4346200, 4483100, 4624300, 4770000, 4920200, 5075200, 5235000, 5399900]
+            },
+            'IV/b': {
+                years: [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32],
+                salaries: [3426900, 3534800, 3646200, 3761000, 3879500, 4001600, 4127700, 4257700, 4391800, 4530100, 4672800, 4819900, 4971700, 5128300, 5289800, 5456400, 5628300]
+            },
+            'IV/c': {
+                years: [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32],
+                salaries: [3571900, 3684400, 3800400, 3920100, 4043600, 4170900, 4302300, 4437800, 4577500, 4721700, 4870400, 5023800, 5182000, 5345200, 5513600, 5687200, 5866400]
+            },
+            'IV/d': {
+                years: [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32],
+                salaries: [3723000, 3840300, 3961200, 4085900, 4214600, 4347300, 4484300, 4625500, 4771200, 4921400, 5076400, 5236300, 5401200, 5571400, 5746800, 5927800, 6114500]
+            },
+            'IV/e': {
+                years: [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32],
+                salaries: [3880400, 4002700, 4128700, 4258700, 4392900, 4531200, 4673900, 4821100, 4973000, 5129600, 5291200, 5457800, 5629700, 5807000, 5989900, 6178600, 6373200]
+            }
         };
-
-        const SALARY_META = {
-            'I/a': { start: 0, max: 26 }, 'I/b': { start: 3, max: 27 }, 'I/c': { start: 3, max: 27 }, 'I/d': { start: 3, max: 27 },
-            'II/a': { start: 0, max: 33 }, 'II/b': { start: 3, max: 33 }, 'II/c': { start: 3, max: 33 }, 'II/d': { start: 3, max: 33 },
-            'III/a': { start: 0, max: 32 }, 'III/b': { start: 0, max: 32 }, 'III/c': { start: 0, max: 32 }, 'III/d': { start: 0, max: 32 },
-            'IV/a': { start: 0, max: 32 }, 'IV/b': { start: 0, max: 32 }, 'IV/c': { start: 0, max: 32 }, 'IV/d': { start: 0, max: 32 }, 'IV/e': { start: 0, max: 32 }
-        };
-
-        // --- FULL EXPLICIT YEAR MAPPING (ANTI-BUG) ---
-        const FULL_YEAR_MAPS = {
-            'I/a': [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26],
-            'I/b': [3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27],
-            'I/c': [3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27],
-            'I/d': [3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27],
-            'II/a': [0, 1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33],
-            'II/b': [3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33],
-            'II/c': [3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33],
-            'II/d': [3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33],
-            'III/a': [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32],
-            'III/b': [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32],
-            'III/c': [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32],
-            'III/d': [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32],
-            'IV/a': [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32],
-            'IV/b': [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32],
-            'IV/c': [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32],
-            'IV/d': [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32],
-            'IV/e': [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32]
-        };
-
-        function buildFullSalaryTable() {
-            const table = {};
-            Object.keys(GAJI_POKOK_ARRAYS).forEach(gol => {
-                const arr = GAJI_POKOK_ARRAYS[gol];
-                const yearMap = FULL_YEAR_MAPS[gol];
-                table[gol] = {};
-                
-                // Use explicit mapping strictly
-                if (arr && yearMap) {
-                    arr.forEach((val, idx) => {
-                        if (idx < yearMap.length) {
-                            const year = yearMap[idx];
-                            table[gol][year] = val;
-                        }
-                    });
-                }
-            });
-            return table;
-        }
-
-        const GAJI_POKOK_2024 = buildFullSalaryTable();
 
         const MASTER_RANK={'I/a':'Juru Muda','I/b':'Juru Muda Tk.I','I/c':'Juru','I/d':'Juru Tk.I','II/a':'Pengatur Muda','II/b':'Pengatur Muda Tk.I','II/c':'Pengatur','II/d':'Pengatur Tk.I','III/a':'Penata Muda','III/b':'Penata Muda Tk.I','III/c':'Penata','III/d':'Penata Tk.I','IV/a':'Pembina','IV/b':'Pembina Tk.I','IV/c':'Pembina Utama Muda','IV/d':'Pembina Utama Madya','IV/e':'Pembina Utama'};
         const GOLONGAN = Object.keys(MASTER_RANK);
@@ -427,9 +429,8 @@ ALTER TABLE settings DISABLE ROW LEVEL SECURITY;
         };
         let supabase = null;
         let isConfigured = false;
-        let isProcessLocked = false; // Prevent race conditions
+        let isProcessLocked = false;
 
-        // Try load from local storage if available
         const savedConfig = localStorage.getItem('sikaji_supabase_config');
         if (savedConfig) {
             try {
@@ -451,7 +452,7 @@ ALTER TABLE settings DISABLE ROW LEVEL SECURITY;
             logoUrl: "https://kalselprov.go.id/wp-content/uploads/2020/09/Logo-Kalsel.png"
         }, currentUser=null, chartGolongan=null, chartJabatan=null;
 
-        // --- MODAL UTILS (Replaces Native Alert/Confirm) ---
+        // --- MODAL UTILS ---
         window.closeGlobalModal = () => document.getElementById('global-modal').classList.add('hidden');
 
         window.showModal = (title, message, type = 'alert', onConfirm = null, isDestructive = false) => {
@@ -501,7 +502,6 @@ ALTER TABLE settings DISABLE ROW LEVEL SECURITY;
                 if (empErr) throw empErr;
                 employees = (emps || []).map(e => ({
                     ...e,
-                    // Parse split MK values, fallback to old combined value if null (migration strategy)
                     mk_pangkat_tahun: e.mk_pangkat_tahun != null ? parseInt(e.mk_pangkat_tahun) : (parseInt(e.mk_tahun) || 0),
                     mk_pangkat_bulan: e.mk_pangkat_bulan != null ? parseInt(e.mk_pangkat_bulan) : (parseInt(e.mk_bulan) || 0),
                     mk_gaji_tahun: e.mk_gaji_tahun != null ? parseInt(e.mk_gaji_tahun) : (parseInt(e.mk_tahun) || 0),
@@ -543,7 +543,6 @@ ALTER TABLE settings DISABLE ROW LEVEL SECURITY;
             } catch (err) {
                 console.error("Failed fetching data:", err);
                 if (err.message && (err.message.includes("relation") || err.message.includes("does not exist") || err.message.includes("column"))) {
-                    // Show setup if columns missing or table missing
                     document.getElementById('setup-interface').classList.remove('hidden');
                 } else {
                     window.showToast("Gagal menarik data database", "error");
@@ -579,7 +578,6 @@ ALTER TABLE settings DISABLE ROW LEVEL SECURITY;
                 window.showToast(`Selamat datang, ${currentUser.name}!`); 
                 window.nav('dashboard');
 
-                // Load initial data
                 await window.loadData();
 
             } catch (e) {
@@ -652,37 +650,29 @@ ALTER TABLE settings DISABLE ROW LEVEL SECURITY;
             return dateObj.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
         }
 
+        // --- SALARY CALCULATION LOGIC ---
         function calcGaji(g, mk) { 
-            const ranges = GAJI_POKOK_2024[g];
-            // No meta needed with explicit map, but good to have fallback checks
-            if (!ranges) return 0;
+            const data = SALARY_REFERENCES[g];
+            if (!data || !data.years || !data.salaries) return 0;
             
             let targetMK = parseInt(mk, 10);
             if (isNaN(targetMK)) targetMK = 0;
             
-            // 1. Exact Lookup
-            if (ranges[targetMK] !== undefined) {
-                return ranges[targetMK];
+            // LOGIC UPDATE: Menghapus pembatasan manual Minimal/Maksimal.
+            // Menggunakan murni lookup data yang tersedia.
+
+            // Iterate backwards to find the highest year <= targetMK (Floor Lookup)
+            // Jika targetMK > max year tabel, loop akan langsung ketemu di index terakhir (max gaji).
+            // Jika targetMK < min year tabel, loop selesai tanpa hasil -> return 0.
+            for (let i = data.years.length - 1; i >= 0; i--) {
+                if (data.years[i] <= targetMK) {
+                    return data.salaries[i];
+                }
             }
-
-            // 2. Opsi C: "Round down to nearest valid step if exact not found" (Safety Fallback)
-            // But specifically handle the "month overflow" logic implicitly by finding the correct floor year.
-            const validYears = Object.keys(ranges).map(Number).sort((a,b) => b-a);
             
-            // If target is above max, return max salary
-            if (targetMK >= validYears[0]) return ranges[validYears[0]];
-
-            // Find the closest LOWER bound (Floor)
-            const lowerBound = validYears.find(y => y <= targetMK);
-            
-            // Note: If someone has MKG=2 and it's I/a (0, 2...), it matches exactly.
-            // If someone has MKG=1 and it's I/a, lowerBound is 0. Correct.
-            // If someone has MKG=2 and it's II/a (0, 1, 3...), lowerBound is 1. Correct.
-            
-            return lowerBound !== undefined ? ranges[lowerBound] : 0;
+            return 0; // Jika MK di bawah tahun minimum tabel (misal MK 0 untuk Gol I/b)
         }
 
-        // Helper to calculate effective salary (Max of PKT vs KGB)
         function getEffectiveSalary(e) {
             const gajiPangkat = calcGaji(e.golongan, e.mk_pangkat_tahun);
             const gajiBerkala = calcGaji(e.golongan, e.mk_gaji_tahun);
@@ -690,14 +680,26 @@ ALTER TABLE settings DISABLE ROW LEVEL SECURITY;
         }
 
         function nextRank(c) { const i=GOLONGAN.indexOf(c); return (i!==-1 && i<GOLONGAN.length-1) ? GOLONGAN[i+1] : c; }
-        function getTenure(d) { return Math.floor(Math.abs(new Date()-d)/(1000*60*60*24*365.25)); }
-        function getAge(d) { const n=new Date(); let a=n.getFullYear()-d.getFullYear(); if(n.getMonth()<d.getMonth()||(n.getMonth()===d.getMonth()&&n.getDate()<d.getDate())) a--; return a; }
-        function getTmtPensiun(d) { let t=new Date(d); t.setFullYear(t.getFullYear()+58); t.setMonth(t.getMonth()+1); t.setDate(1); return t; }
         
-        // Fixed Precedence
-        function getMonthDiff(d1, d2) { 
-            if(!(d1 instanceof Date)||!(d2 instanceof Date)) return 0; 
-            return ((d2.getFullYear()-d1.getFullYear())*12) + (d2.getMonth()-d1.getMonth()) + (d2.getDate()<d1.getDate()?-1:0); 
+        function getTenure(d) { return Math.floor(Math.abs(new Date()-d)/(1000*60*60*24*365.25)); }
+        
+        function getAge(d) { const n=new Date(); let a=n.getFullYear()-d.getFullYear(); if(n.getMonth()<d.getMonth()||(n.getMonth()===d.getMonth()&&n.getDate()<d.getDate())) a--; return a; }
+        
+        function getBUP(jabatan, jenis) {
+            const j = (jabatan || '').toLowerCase();
+            const t = (jenis || '').toLowerCase();
+            if (j.includes('ahli utama')) return 65;
+            if (j.includes('ahli madya') || (t === 'struktural' && (j.includes('kepala dinas') || j.includes('kepala badan') || j.includes('asisten')))) return 60;
+            return 58;
+        }
+
+        function getTmtPensiun(d, jab, jenis) { 
+            const bup = getBUP(jab, jenis);
+            let t = new Date(d); 
+            t.setFullYear(t.getFullYear() + bup); 
+            t.setMonth(t.getMonth() + 1); 
+            t.setDate(1); 
+            return t; 
         }
         
         function getReductionYears(o, n) { const mo=o.split('/')[0], mn=n.split('/')[0]; return (mo==='I'&&mn==='II')?6:(mo==='II'&&mn==='III')?5:(mo==='III'&&mn==='IV')?4:0; }
@@ -753,20 +755,17 @@ ALTER TABLE settings DISABLE ROW LEVEL SECURITY;
             location.reload();
         };
 
-        // --- LOGIC: PERPRES 10/2024 & PERBKN 2/2025 ---
+        // --- LOGIC ---
         window.isEligibleKP = function(e) {
-            // 1. Cek Batas Pangkat Puncak
             const nextR = nextRank(e.golongan);
             if (e.golongan === 'IV/e' || nextR === e.golongan) return { eligible: false, msg: "Pangkat Puncak (Mentok)" };
-
-            // 2. Cek Batas Pangkat Puncak Berdasarkan Pendidikan
+            
             const edu = e.pendidikan || 'SLTA';
             const maxRankEdu = MAX_RANK_REGULER[edu] || 'IV/e';
             const currentIdx = GOLONGAN.indexOf(e.golongan);
             const maxIdx = GOLONGAN.indexOf(maxRankEdu);
             if (currentIdx >= maxIdx) return { eligible: false, msg: "Mentok Pangkat Pendidikan" };
 
-            // 3. Cek Syarat Ujian Dinas
             const currentLevel = e.golongan.split('/')[0];
             const nextLevel = nextR.split('/')[0];
             if (currentLevel !== nextLevel) {
@@ -774,44 +773,38 @@ ALTER TABLE settings DISABLE ROW LEVEL SECURITY;
                 if (!isExempt && !e.ujian_dinas) return { eligible: false, msg: "Wajib Ujian Dinas" };
             }
 
-            // 4. Cek Status & Disiplin
-            if(!e.tgl_lahir || new Date() >= getTmtPensiun(e.tgl_lahir)) return { eligible:false, msg: "BUP" };
+            if(!e.tgl_lahir || new Date() >= getTmtPensiun(e.tgl_lahir, e.jabatan, e.jenis_jabatan)) return { eligible:false, msg: "BUP" };
             if(e.hukuman_disiplin || ['Cukup','Kurang'].includes(e.nilai_skp)) return { eligible:false, msg: "Tidak Memenuhi Syarat" };
             
-            // 5. Cek Proses
             const isPending = proposals.some(p => p.empid === e.id && p.status === 'MENUNGGU' && p.type === 'PANGKAT');
             if(isPending) return { eligible:false, msg: "Sedang Proses" };
 
-            // 6. Hitung TMT (Reguler 4 Tahun dari TMT Pangkat terakhir)
             const tmt = new Date(e.tmt_pangkat); 
             tmt.setFullYear(tmt.getFullYear() + 4);
-            tmt.setDate(1); // FIX: Always set to 1st of month
+            tmt.setDate(1); 
             const cutOff = new Date(); cutOff.setMonth(cutOff.getMonth() + 3);
 
             return { eligible: cutOff >= tmt, nextTMT: tmt };
         };
 
         window.isEligibleKGB = function(e) {
-            // 1. Cek Batas MKG Maksimal
-            const meta = FULL_YEAR_MAPS[e.golongan] ? { max: Math.max(...FULL_YEAR_MAPS[e.golongan]) } : { max: 32 };
-            // Gunakan MK Gaji untuk cek eligibility KGB
-            if (meta && e.mk_gaji_tahun >= meta.max) {
+            const data = SALARY_REFERENCES[e.golongan];
+            const maxMK = data && data.years ? Math.max(...data.years) : 32;
+
+            if (e.mk_gaji_tahun >= maxMK) {
                 return { eligible: false, msg: "Masa Kerja Mentok (Maksimal)" };
             }
 
-            // 2. Cek Status
-            if(!e.tgl_lahir || new Date() >= getTmtPensiun(e.tgl_lahir)) return { eligible:false, msg: "BUP" };
+            if(!e.tgl_lahir || new Date() >= getTmtPensiun(e.tgl_lahir, e.jabatan, e.jenis_jabatan)) return { eligible:false, msg: "BUP" };
             if(e.hukuman_disiplin) return { eligible:false, msg: "Hukuman Disiplin" };
 
-            // 3. Cek Proses
             const isPending = proposals.some(p => p.empid === e.id && p.status === 'MENUNGGU' && p.type === 'KGB');
             if(isPending) return { eligible:false, msg: "Sedang Proses" };
 
-            // 4. Hitung TMT (2 Tahun dari TMT Berkala terakhir)
             const tmtBase = e.tmt_berkala ? new Date(e.tmt_berkala) : new Date(e.tmt_pangkat);
             const tmt = new Date(tmtBase); 
             tmt.setFullYear(tmt.getFullYear() + 2);
-            tmt.setDate(1); // FIX: Always set to 1st of month
+            tmt.setDate(1);
             const cutOff = new Date(); cutOff.setMonth(cutOff.getMonth() + 2);
 
             return { eligible: cutOff >= tmt, nextTMT: tmt, nextMKG: e.mk_gaji_tahun + 2 };
@@ -841,7 +834,6 @@ ALTER TABLE settings DISABLE ROW LEVEL SECURITY;
             if(page==='simulation') { const s = document.getElementById('sim-golongan'); if(s.options.length===0) GOLONGAN.forEach(g => s.innerHTML+=`<option value="${g}">${g}</option>`); }
         };
 
-        // --- NEW FUNCTION: Quick Salary Calculator ---
         window.calculateQuickSalary = function() {
             const gol = document.getElementById('calc-golongan').value;
             const mk = parseInt(document.getElementById('calc-mk').value) || 0;
@@ -864,21 +856,20 @@ ALTER TABLE settings DISABLE ROW LEVEL SECURITY;
         
         window.renderSalaryTable = function() { 
             const t = document.getElementById('table-salary-body'); 
-            if(t) t.innerHTML = Object.keys(GAJI_POKOK_2024).map(g => { 
-                const rangeData = GAJI_POKOK_2024[g]; 
-                const mkgs = Object.keys(rangeData).map(Number).sort((a,b)=>a-b); 
-                const min = rangeData[mkgs[0]]; 
-                const max = rangeData[mkgs[mkgs.length-1]]; 
-                const maxMKG = mkgs[mkgs.length-1]; 
+            if(t) t.innerHTML = Object.keys(SALARY_REFERENCES).map(g => { 
+                const data = SALARY_REFERENCES[g];
+                const min = data.salaries[0];
+                const max = data.salaries[data.salaries.length - 1];
+                const maxMKG = data.years[data.years.length - 1];
                 return `<tr class="hover:bg-slate-50 border-b border-slate-100"><td class="p-4 pl-6 font-bold text-slate-800">${g}</td><td class="p-4 text-slate-600">${MASTER_RANK[g]}</td><td class="p-4 text-center font-mono text-emerald-600">${fmtMoney(min)}</td><td class="p-4 text-center text-slate-500">${maxMKG} Tahun</td><td class="p-4 text-right pr-6 font-mono text-slate-800 font-bold">${fmtMoney(max)}</td><td class="p-4 text-center"><button onclick="window.showSalaryDetail('${g}')" class="text-xs font-bold text-blue-600 hover:underline">Lihat Detail</button></td></tr>`; 
             }).join(''); 
         }
 
         window.showSalaryDetail = function(gol) {
-            const range = GAJI_POKOK_2024[gol];
+            const data = SALARY_REFERENCES[gol];
             let detailHtml = '<div class="grid grid-cols-2 gap-2 text-sm">';
-            Object.keys(range).map(Number).sort((a,b)=>a-b).forEach(mk => {
-                detailHtml += `<div class="flex justify-between border-b border-slate-100 py-1"><span>${mk} Tahun</span><span class="font-mono font-bold text-slate-700">${fmtMoney(range[mk])}</span></div>`;
+            data.years.forEach((year, idx) => {
+                detailHtml += `<div class="flex justify-between border-b border-slate-100 py-1"><span>${year} Tahun</span><span class="font-mono font-bold text-slate-700">${fmtMoney(data.salaries[idx])}</span></div>`;
             });
             detailHtml += '</div>';
             const modal = document.createElement('div');
@@ -899,8 +890,18 @@ ALTER TABLE settings DISABLE ROW LEVEL SECURITY;
         window.renderPensiun = function() {
             const g = document.getElementById('pensiun-grid'); if(!g) return;
             const near = employees.filter(e => getAge(e.tgl_lahir) >= 56);
-            g.innerHTML = near.length ? near.map(e => `<div class="bg-white p-5 rounded-xl shadow-sm border-l-4 border-red-500 flex justify-between items-center"><div><h4 class="font-bold text-slate-800">${e.nama}</h4><p class="text-xs text-slate-500 font-mono mb-2">${e.nip}</p><div class="text-xs font-bold text-red-600 bg-red-50 px-2 py-1 rounded inline-block">${getAge(e.tgl_lahir)} Tahun</div></div><div class="text-right"><div class="text-[10px] text-slate-400 uppercase font-bold">TMT Pensiun</div><div class="font-bold text-slate-700">${fmtDate(getTmtPensiun(e.tgl_lahir))}</div></div></div>`).join('') : `<div class="col-span-3 text-center p-8 bg-white rounded-xl border border-dashed border-slate-300 text-slate-400">Tidak ada pegawai yang mendekati masa pensiun (< 2 Tahun).</div>`;
-            document.getElementById('table-pensiun-body').innerHTML = employees.sort((a,b) => a.tgl_lahir - b.tgl_lahir).map(e => `<tr class="hover:bg-slate-50 border-b border-slate-100"><td class="p-4 font-bold text-slate-700 text-sm">${e.nama}</td><td class="p-4 text-sm">${fmtDate(e.tgl_lahir)}</td><td class="p-4 text-center font-bold text-sm">${getAge(e.tgl_lahir)}</td><td class="p-4 text-center text-sm text-slate-500">${58 - getAge(e.tgl_lahir)} Thn</td><td class="p-4 text-sm font-medium text-slate-800">${fmtDate(getTmtPensiun(e.tgl_lahir))}</td></tr>`).join('');
+            g.innerHTML = near.length ? near.map(e => {
+                const bup = getBUP(e.jabatan, e.jenis_jabatan);
+                const tmtPensiun = getTmtPensiun(e.tgl_lahir, e.jabatan, e.jenis_jabatan);
+                return `<div class="bg-white p-5 rounded-xl shadow-sm border-l-4 border-red-500 flex justify-between items-center"><div><h4 class="font-bold text-slate-800">${e.nama}</h4><p class="text-xs text-slate-500 font-mono mb-2">${e.nip}</p><div class="text-xs font-bold text-red-600 bg-red-50 px-2 py-1 rounded inline-block">${getAge(e.tgl_lahir)} Tahun (BUP ${bup})</div></div><div class="text-right"><div class="text-[10px] text-slate-400 uppercase font-bold">TMT Pensiun</div><div class="font-bold text-slate-700">${fmtDate(tmtPensiun)}</div></div></div>`
+            }).join('') : `<div class="col-span-3 text-center p-8 bg-white rounded-xl border border-dashed border-slate-300 text-slate-400">Tidak ada pegawai yang mendekati masa pensiun (< 2 Tahun).</div>`;
+            
+            document.getElementById('table-pensiun-body').innerHTML = employees.sort((a,b) => a.tgl_lahir - b.tgl_lahir).map(e => {
+                 const bup = getBUP(e.jabatan, e.jenis_jabatan);
+                 const tmtPensiun = getTmtPensiun(e.tgl_lahir, e.jabatan, e.jenis_jabatan);
+                 const sisa = bup - getAge(e.tgl_lahir);
+                 return `<tr class="hover:bg-slate-50 border-b border-slate-100"><td class="p-4 font-bold text-slate-700 text-sm">${e.nama}</td><td class="p-4 text-sm">${fmtDate(e.tgl_lahir)}</td><td class="p-4 text-center font-bold text-sm">${getAge(e.tgl_lahir)}</td><td class="p-4 text-center text-sm text-slate-500">${sisa} Thn</td><td class="p-4 text-sm font-medium text-slate-800">${fmtDate(tmtPensiun)}</td></tr>`
+            }).join('');
         }
         
         window.renderPegawai = function() {
@@ -968,6 +969,13 @@ ALTER TABLE settings DISABLE ROW LEVEL SECURITY;
                      nGaji = calcGaji(nR, nMK); 
                 }
 
+                // Status logic for UI
+                const today = new Date();
+                const isDue = r.nextTMT <= today;
+                const statusLabel = isDue ? 
+                    '<span class="bg-emerald-100 text-emerald-700 px-2 py-1 rounded-md text-[10px] font-bold border border-emerald-200">SIAP PROSES</span>' : 
+                    '<span class="bg-amber-100 text-amber-700 px-2 py-1 rounded-md text-[10px] font-bold border border-amber-200">SEGERA</span>';
+
                 return `<tr class="hover:bg-slate-50 border-b border-slate-100 group">
                     <td class="p-5 font-bold text-sm text-slate-700">
                         ${e.nama}<br><span class="font-normal text-xs text-slate-500">${e.nip}</span>
@@ -978,7 +986,7 @@ ALTER TABLE settings DISABLE ROW LEVEL SECURITY;
                         <div class="text-[10px] text-emerald-600 mt-0.5">Estimasi: ${fmtMoney(nGaji)}</div>
                     </td>
                     <td class="p-5 text-center">
-                        <span class="bg-emerald-100 text-emerald-700 px-2 py-1 rounded-md text-[10px] font-bold border border-emerald-200">ELIGIBLE</span>
+                        ${statusLabel}
                     </td>
                     <td class="p-5 text-right">
                         <button onclick="window.createProposal('${e.id}', '${type}')" class="bg-navy-900 hover:bg-navy-800 text-white px-4 py-2 rounded-lg text-xs font-bold shadow-lg shadow-navy-900/20 transition-all flex items-center gap-2 ml-auto">
@@ -1307,7 +1315,7 @@ ALTER TABLE settings DISABLE ROW LEVEL SECURITY;
         };
         
         window.updateDashboard = function() {
-            const active = employees.filter(e => new Date() < getTmtPensiun(e.tgl_lahir));
+            const active = employees.filter(e => new Date() < getTmtPensiun(e.tgl_lahir, e.jabatan, e.jenis_jabatan));
             document.getElementById('stat-total').innerText = active.length;
             
             // Statistik Usulan
@@ -1317,7 +1325,7 @@ ALTER TABLE settings DISABLE ROW LEVEL SECURITY;
             
             // Fixed: Use consistent calculation
             const totalGaji = active.reduce((acc, e) => acc + getEffectiveSalary(e), 0);
-            const pensiunThisYear = active.filter(e => getTmtPensiun(e.tgl_lahir).getFullYear() === new Date().getFullYear()).length;
+            const pensiunThisYear = active.filter(e => getTmtPensiun(e.tgl_lahir, e.jabatan, e.jenis_jabatan).getFullYear() === new Date().getFullYear()).length;
             
             // Jabatan Stats
             const jabatanStats = { 'Struktural': 0, 'Fungsional': 0, 'Pelaksana': 0 };
