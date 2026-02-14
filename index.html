@@ -40,11 +40,6 @@
         .table-row-hover:hover td { background-color: #f8fafc; transition: background-color 0.2s; }
         .custom-scrollbar::-webkit-scrollbar { width: 4px; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
-        /* Modal Styles */
-        .modal-enter { opacity: 0; transform: scale(0.95); }
-        .modal-enter-active { opacity: 1; transform: scale(1); transition: opacity 200ms, transform 200ms; }
-        .modal-exit { opacity: 1; transform: scale(1); }
-        .modal-exit-active { opacity: 0; transform: scale(0.95); transition: opacity 200ms, transform 200ms; }
     </style>
 </head>
 <body class="antialiased overflow-hidden selection:bg-gold-500 selection:text-white bg-luxury-pattern">
@@ -89,9 +84,16 @@
     <!-- SETUP INTERFACE -->
     <div id="setup-interface" class="fixed inset-0 z-[60] bg-slate-900/90 backdrop-blur-md flex items-center justify-center hidden overflow-y-auto py-10">
         <div class="bg-white p-10 rounded-3xl shadow-2xl w-full max-w-2xl mx-4 border border-white/20 relative overflow-hidden animate-slide-up">
+            <div class="flex justify-between items-start mb-6">
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-900 mb-2">Setup Database</h2>
+                    <p class="text-sm text-slate-500 tracking-tight">Konfigurasi koneksi ke Supabase Cloud.</p>
+                </div>
+                <button onclick="document.getElementById('setup-interface').classList.add('hidden')" class="text-slate-400 hover:text-slate-600"><i class="ph ph-x text-2xl"></i></button>
+            </div>
+            
             <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-gold-500 to-amber-300"></div>
-            <h2 class="text-2xl font-bold text-slate-900 mb-2">Setup Database</h2>
-            <p class="text-sm text-slate-500 mb-6 tracking-tight">Kredensial Supabase Anda telah dimuat otomatis.</p>
+            
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                 <div><label class="block text-[10px] font-bold text-slate-400 uppercase mb-2">Project URL</label><input type="text" id="supabase-url" class="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium outline-none transition-all" value="https://cfnnibbzhbylykckhpiy.supabase.co"></div>
                 <div><label class="block text-[10px] font-bold text-slate-400 uppercase mb-2">Anon Key</label><input type="password" id="supabase-key" class="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium outline-none transition-all" value="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNmbm5pYmJ6aGJ5bHlrY2tocGl5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA4OTAyMTAsImV4cCI6MjA4NjQ2NjIxMH0.Xuk9m85FQ8VrRjxyMeCxnx-3_8plOBVm9-Im9S41wPk"></div>
@@ -106,24 +108,24 @@
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
 CREATE TABLE IF NOT EXISTS users ( id UUID DEFAULT gen_random_uuid() PRIMARY KEY, username TEXT UNIQUE, password TEXT, name TEXT, role TEXT );
-CREATE TABLE IF NOT EXISTS employees ( 
-    id UUID DEFAULT gen_random_uuid() PRIMARY KEY, 
-    nama TEXT, nip TEXT, jabatan TEXT, jenis_jabatan TEXT, golongan TEXT, 
+CREATE TABLE IF NOT EXISTS employees (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    nama TEXT, nip TEXT, jabatan TEXT, jenis_jabatan TEXT, golongan TEXT,
     mk_pangkat_tahun INTEGER, mk_pangkat_bulan INTEGER, -- MK Pada SK Pangkat
     mk_gaji_tahun INTEGER, mk_gaji_bulan INTEGER,       -- MK Pada SK Berkala/Gaji
-    tgl_lahir DATE, tmt_pangkat DATE, tmt_berkala DATE, 
-    nilai_skp TEXT, hukuman_disiplin BOOLEAN, pendidikan TEXT, ujian_dinas BOOLEAN, 
-    lastsync BIGINT 
+    tgl_lahir DATE, tmt_pangkat DATE, tmt_berkala DATE,
+    nilai_skp TEXT, hukuman_disiplin BOOLEAN, pendidikan TEXT, ujian_dinas BOOLEAN,
+    lastsync BIGINT
 );
 CREATE TABLE IF NOT EXISTS proposals ( id UUID DEFAULT gen_random_uuid() PRIMARY KEY, empid UUID, empname TEXT, empnip TEXT, type TEXT, status TEXT, date TIMESTAMP, newtmt DATE, oldrank TEXT, newrank TEXT, newgaji BIGINT, newmktahun INTEGER, reduction INTEGER );
 CREATE TABLE IF NOT EXISTS activity_logs ( id UUID DEFAULT gen_random_uuid() PRIMARY KEY, text TEXT, type TEXT, time TEXT, createdat BIGINT );
 CREATE TABLE IF NOT EXISTS settings ( id TEXT PRIMARY KEY, signername TEXT, signernip TEXT, signerposition TEXT, signergolongan TEXT, logourl TEXT, regulation TEXT, effectivedate TEXT, ranges JSONB, updatedat BIGINT, updatedby TEXT );
 
 -- 2. Data Awal Admin (Username: admin, Pass: admin123)
+-- PENTING: Jalankan baris ini jika login gagal
 INSERT INTO users (username, password, name, role) VALUES ('admin', 'admin123', 'Administrator', 'admin') ON CONFLICT (username) DO NOTHING;
 
 -- 3. Fungsi Login Aman (RPC)
--- Logika autentikasi berjalan di server database
 CREATE OR REPLACE FUNCTION login_user(usr TEXT, pwd TEXT)
 RETURNS json AS $$
 DECLARE
@@ -135,15 +137,17 @@ END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 
 -- 4. Buka Akses RLS (Untuk Prototype)
-ALTER TABLE users DISABLE ROW LEVEL SECURITY; 
-ALTER TABLE employees DISABLE ROW LEVEL SECURITY; 
-ALTER TABLE proposals DISABLE ROW LEVEL SECURITY; 
-ALTER TABLE activity_logs DISABLE ROW LEVEL SECURITY; 
+ALTER TABLE users DISABLE ROW LEVEL SECURITY;
+ALTER TABLE employees DISABLE ROW LEVEL SECURITY;
+ALTER TABLE proposals DISABLE ROW LEVEL SECURITY;
+ALTER TABLE activity_logs DISABLE ROW LEVEL SECURITY;
 ALTER TABLE settings DISABLE ROW LEVEL SECURITY;
                 </textarea>
-                <button onclick="window.copySQL()" class="mt-2 text-[10px] text-blue-400 hover:text-blue-300 font-bold flex items-center gap-1"><i class="ph ph-copy"></i> Salin Script</button>
+                <div class="flex gap-2 mt-2">
+                    <button onclick="window.copySQL()" class="flex-1 text-[10px] text-blue-400 hover:text-blue-300 font-bold flex items-center gap-1 justify-center bg-white/5 p-2 rounded hover:bg-white/10 transition-colors"><i class="ph ph-copy"></i> Salin Script</button>
+                </div>
             </div>
-            <button onclick="window.saveLocalConfig()" class="w-full bg-slate-900 text-white py-4 rounded-xl font-bold text-sm shadow-xl hover:bg-slate-800 transition-all flex items-center justify-center gap-2"><i class="ph ph-plug"></i> Simpan & Muat Ulang</button>
+            <button onclick="window.saveLocalConfig()" class="w-full bg-slate-900 text-white py-4 rounded-xl font-bold text-sm shadow-xl hover:bg-slate-800 transition-all flex items-center justify-center gap-2"><i class="ph ph-plug"></i> Simpan Koneksi</button>
         </div>
     </div>
 
@@ -182,6 +186,12 @@ ALTER TABLE settings DISABLE ROW LEVEL SECURITY;
         <!-- SISI KANAN: FORM LOGIN -->
         <div class="w-full lg:w-5/12 flex items-center justify-center p-8 lg:p-12 relative bg-white">
              <div class="absolute inset-0 lg:hidden z-0"><img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover opacity-5"><div class="absolute inset-0 bg-gradient-to-b from-white via-white/95 to-slate-50/90"></div></div>
+            
+             <!-- Settings Button -->
+             <button onclick="document.getElementById('setup-interface').classList.remove('hidden')" class="absolute top-8 right-8 z-20 text-slate-400 hover:text-slate-600 flex items-center gap-2 text-xs font-bold bg-white/80 p-2 rounded-lg backdrop-blur-sm border border-slate-200 shadow-sm transition-all hover:bg-white">
+                <i class="ph ph-gear-six text-lg"></i> <span class="hidden sm:inline">Konfigurasi Database</span>
+            </button>
+
             <div class="w-full max-w-xs relative z-10">
                 <div class="text-center mb-12 lg:text-left"><h2 class="text-3xl font-extrabold text-navy-900 mb-2">Selamat Datang</h2><p class="text-slate-500 text-sm">Silakan login untuk mengakses dashboard kepegawaian.</p></div>
                 <form onsubmit="event.preventDefault(); window.performLogin();" class="space-y-6">
@@ -189,7 +199,10 @@ ALTER TABLE settings DISABLE ROW LEVEL SECURITY;
                     <div class="space-y-2"><label class="block text-xs font-bold text-slate-700 uppercase tracking-wide">Password</label><div class="relative group"><div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none"><i class="ph ph-lock-key text-slate-400 group-focus-within:text-gold-500 transition-colors text-lg"></i></div><input type="password" id="login-password" class="w-full pl-11 pr-4 py-4 bg-slate-50 border border-slate-200 rounded-xl text-slate-800 text-sm focus:ring-2 focus:ring-gold-500/20 focus:border-gold-500 focus:bg-white outline-none transition-all placeholder-slate-400" placeholder="••••••••" required></div></div>
                     <button type="submit" class="w-full bg-navy-900 text-white py-4 rounded-xl font-bold text-sm shadow-xl shadow-navy-900/10 hover:bg-navy-800 hover:shadow-navy-900/20 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 group"><span>Masuk Aplikasi</span><i class="ph ph-arrow-right font-bold group-hover:translate-x-1 transition-transform"></i></button>
                 </form>
-                <div class="mt-8 text-center lg:text-left pt-6 border-t border-slate-100"><p class="text-[10px] text-slate-400 mb-2">Mengalami kendala login? Hubungi Administrator.</p></div>
+                <div class="mt-8 text-center lg:text-left pt-6 border-t border-slate-100">
+                    <p class="text-[10px] text-slate-400 mb-2">Default Login: <strong>admin</strong> / <strong>admin123</strong></p>
+                    <p class="text-[10px] text-slate-400">Pastikan script SQL telah dijalankan.</p>
+                </div>
             </div>
             <div class="absolute bottom-4 right-4 lg:right-8 text-right"><p class="text-[10px] text-slate-300">v2.1 Production</p></div>
         </div>
@@ -325,7 +338,7 @@ ALTER TABLE settings DISABLE ROW LEVEL SECURITY;
                         <div><h3 class="font-bold text-slate-800 text-xl">Tabel Referensi Lengkap</h3><p class="text-slate-500 text-sm">Penyesuaian gaji pokok berdasarkan Perpres No. 10 Tahun 2024.</p></div>
                         <div class="text-xs bg-emerald-50 text-emerald-700 border border-emerald-200 px-3 py-1.5 rounded-lg font-bold">Efektif: Jan 2024</div>
                     </div>
-                    <div class="glass rounded-3xl overflow-hidden shadow-sm"><div class="overflow-x-auto"><table class="w-full text-left text-sm"><thead class="bg-navy-900 text-white font-bold border-b border-navy-800 uppercase text-xs"><tr><th class="p-5 pl-8">Golongan</th><th class="p-5">Pangkat</th><th class="p-5 text-center">MKG Min (0 Thn)</th><th class="p-5 text-center">MKG Maks</th><th class="p-5 text-right pr-8">Gaji Maksimal</th><th class="p-5 text-center">Opsi</th></tr></thead><tbody id="table-salary-body" class="divide-y divide-slate-100 bg-white/50"></tbody></table></div></div>
+                    <div class="glass rounded-3xl overflow-hidden shadow-sm"><div class="overflow-x-auto"><table class="w-full text-left text-sm"><thead class="bg-navy-900 text-white font-bold border-b border-navy-800 uppercase text-xs"><tr><th class="p-5 pl-8">Golongan</th><th class="p-5">Pangkat</th><th class="p-5 text-center">MKG Maks</th><th class="p-5 text-center">Opsi</th></tr></thead><tbody id="table-salary-body" class="divide-y divide-slate-100 bg-white/50"></tbody></table></div></div>
                 </div>
 
                 <div id="view-pensiun" class="hidden space-y-6 animate-fade-in"><div class="flex items-center justify-between"><h3 class="font-bold text-slate-700 text-xl">Monitoring Batas Usia Pensiun</h3><span class="text-xs bg-red-50 text-red-600 border border-red-100 px-3 py-1 rounded-full font-bold">BUP: 58 Tahun</span></div><div id="pensiun-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div><div class="glass rounded-3xl overflow-hidden shadow-sm mt-8"><div class="p-5 border-b border-slate-100 bg-slate-50/50 font-bold text-slate-700 text-sm">Daftar Lengkap Estimasi Pensiun</div><table class="w-full text-left text-sm"><thead class="bg-slate-50 text-slate-500 font-bold border-b border-slate-200 uppercase text-xs"><tr><th class="p-5 pl-8">Pegawai</th><th class="p-5">Tanggal Lahir</th><th class="p-5 text-center">Usia Saat Ini</th><th class="p-5 text-center">Sisa Masa Kerja</th><th class="p-5">TMT Pensiun</th></tr></thead><tbody id="table-pensiun-body" class="divide-y divide-slate-100 bg-white/50"></tbody></table></div></div>
@@ -888,7 +901,7 @@ ALTER TABLE settings DISABLE ROW LEVEL SECURITY;
                 const min = data.salaries[0];
                 const max = data.salaries[data.salaries.length - 1];
                 const maxMKG = data.years[data.years.length - 1];
-                return `<tr class="hover:bg-slate-50 border-b border-slate-100"><td class="p-4 pl-6 font-bold text-slate-800">${g}</td><td class="p-4 text-slate-600">${MASTER_RANK[g]}</td><td class="p-4 text-center font-mono text-emerald-600">${fmtMoney(min)}</td><td class="p-4 text-center text-slate-500">${maxMKG} Tahun</td><td class="p-4 text-right pr-6 font-mono text-slate-800 font-bold">${fmtMoney(max)}</td><td class="p-4 text-center"><button onclick="window.showSalaryDetail('${g}')" class="text-xs font-bold text-blue-600 hover:underline">Lihat Detail</button></td></tr>`; 
+                return `<tr class="hover:bg-slate-50 border-b border-slate-100"><td class="p-4 pl-6 font-bold text-slate-800">${g}</td><td class="p-4 text-slate-600">${MASTER_RANK[g]}</td><td class="p-4 text-center text-slate-500">${maxMKG} Tahun</td><td class="p-4 text-center"><button onclick="window.showSalaryDetail('${g}')" class="text-xs font-bold text-blue-600 hover:underline">Lihat Detail</button></td></tr>`; 
             }).join(''); 
         }
 
